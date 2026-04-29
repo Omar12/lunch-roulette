@@ -55,10 +55,11 @@ export default function EditPlaceForm({ place, onSubmit, onClose }: EditPlaceFor
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
           transition={{ type: "spring", damping: 28, stiffness: 300 }}
-          className="w-full sm:max-w-lg bg-white rounded-t-3xl sm:rounded-3xl p-6 max-h-[92vh] overflow-y-auto"
+          className="w-full sm:max-w-lg bg-white rounded-t-3xl sm:rounded-3xl flex flex-col max-h-[92dvh]"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="flex items-center justify-between mb-5">
+          {/* Fixed header — always visible even when keyboard is open */}
+          <div className="flex items-center justify-between px-6 pt-6 pb-4 shrink-0">
             <h2 className="text-xl font-bold text-brand-text">Edit Place</h2>
             <button
               onClick={onClose}
@@ -69,6 +70,8 @@ export default function EditPlaceForm({ place, onSubmit, onClose }: EditPlaceFor
             </button>
           </div>
 
+          {/* Scrollable form body */}
+          <div className="overflow-y-auto overscroll-contain px-6 pb-6">
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
             <div>
               <label
@@ -215,6 +218,7 @@ export default function EditPlaceForm({ place, onSubmit, onClose }: EditPlaceFor
               </button>
             </div>
           </form>
+          </div>
         </motion.div>
       </motion.div>
     </AnimatePresence>
