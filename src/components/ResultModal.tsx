@@ -1,7 +1,8 @@
 "use client";
 
 import { useMemo } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion, AnimatePresence, useReducedMotion } from "framer-motion";
+import { useModalA11y } from "@/hooks/useModalA11y";
 import type { LunchPlace } from "@/types";
 
 interface ResultModalProps {
@@ -19,6 +20,8 @@ const PRICE_COLORS: Record<string, string> = {
 const CONFETTI_EMOJIS = ["🎉", "🎊", "✨", "🍔", "🥗", "🍕", "🌮", "🍜"];
 
 export default function ResultModal({ place, onClose }: ResultModalProps) {
+  const prefersReduced = useReducedMotion();
+  const cardRef = useModalA11y<HTMLDivElement>(onClose);
   const confetti = useMemo(
     () =>
       Array.from({ length: 8 }, (_, i) => ({
@@ -40,7 +43,7 @@ export default function ResultModal({ place, onClose }: ResultModalProps) {
         className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center px-4"
         onClick={onClose}
       >
-        {confetti.map((c, i) => (
+        {!prefersReduced && confetti.map((c, i) => (
           <motion.span
             key={i}
             className="fixed text-2xl pointer-events-none select-none"
@@ -54,7 +57,11 @@ export default function ResultModal({ place, onClose }: ResultModalProps) {
         ))}
 
         <motion.div
+          ref={cardRef}
           key="result-card"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="result-place-name"
           initial={{ scale: 0.7, opacity: 0, y: 40 }}
           animate={{ scale: 1, opacity: 1, y: 0 }}
           exit={{ scale: 0.9, opacity: 0, y: 20 }}
@@ -81,6 +88,7 @@ export default function ResultModal({ place, onClose }: ResultModalProps) {
             </p>
 
             <motion.h2
+              id="result-place-name"
               initial={{ opacity: 0, y: 8 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 0.2 }}

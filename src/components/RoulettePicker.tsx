@@ -20,6 +20,13 @@ export default function RoulettePicker({
   winner,
   onComplete,
 }: RoulettePickerProps) {
+  // Read synchronously at mount: framer's useReducedMotion resolves a tick late,
+  // which would let the full spin start before the preference is known.
+  const [prefersReduced] = useState(
+    () =>
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
   const reel = buildSpinReel(eligible, winner, 30);
   const [currentIndex, setCurrentIndex] = useState(0);
   const [displayName, setDisplayName] = useState(reel[0]);
@@ -30,6 +37,16 @@ export default function RoulettePicker({
   const doneRef = useRef(false);
 
   useEffect(() => {
+    // Reduced motion: skip the spinning ceremony, crossfade straight to the winner.
+    if (prefersReduced) {
+      indexRef.current = reel.length - 1;
+      doneRef.current = true;
+      setDisplayName(winner.name);
+      setCurrentIndex(reel.length - 1);
+      const t = setTimeout(onComplete, 500);
+      return () => clearTimeout(t);
+    }
+
     startTimeRef.current = Date.now();
     lastTickRef.current = Date.now();
 
@@ -78,7 +95,7 @@ export default function RoulettePicker({
       className="fixed inset-0 z-40 bg-brand-bg flex flex-col items-center justify-center px-6"
     >
       <p className="text-brand-muted text-sm font-medium mb-8 tracking-widest uppercase">
-        Spinning…
+        {prefersReduced ? "Your pick" : "Spinning…"}
       </p>
 
       <div className="relative w-full max-w-sm">
@@ -97,7 +114,7 @@ export default function RoulettePicker({
               className="text-center"
             >
               <span
-                className={`text-3xl font-extrabold leading-tight block ${
+                className={`text-3xl font-extrabold leading-tight block text-balance break-words px-4 ${
                   isWinner ? "text-brand-orange" : "text-brand-text"
                 }`}
               >
@@ -108,7 +125,9 @@ export default function RoulettePicker({
         </div>
       </div>
 
-      <p className="text-brand-muted text-xs mt-6">Deciding your fate…</p>
+      {!prefersReduced && (
+        <p className="text-brand-muted text-xs mt-6">Deciding your fate…</p>
+      )}
     </motion.div>
   );
 }

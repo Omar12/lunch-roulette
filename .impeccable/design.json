@@ -1,0 +1,121 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-07-02T00:00:00Z",
+  "title": "Design System: Lunch Roulette",
+  "extensions": {
+    "colorMeta": {
+      "orange": { "role": "primary", "displayName": "Roulette Orange", "canonical": "#FF6B35", "tonalRamp": ["#3d1608", "#6b260e", "#993716", "#c7481e", "#f55a2b", "#ff7d54", "#ffa587", "#ffcdbb"] },
+      "yellow": { "role": "secondary", "displayName": "Golden Yellow", "canonical": "#FFD166", "tonalRamp": ["#3d3210", "#6b571c", "#997c28", "#c7a134", "#f5c640", "#ffd680", "#ffe4a8", "#fff1d0"] },
+      "green":  { "role": "tertiary", "displayName": "Mint Green", "canonical": "#06D6A0", "tonalRamp": ["#023326", "#025540", "#037a5b", "#049e76", "#06d6a0", "#3ce3b8", "#7aefd0", "#b8f7e6"] },
+      "purple": { "role": "tertiary", "displayName": "Deep Grape", "canonical": "#7B2D8B", "tonalRamp": ["#1f0b24", "#361340", "#4d1b5c", "#642578", "#7b2d8b", "#9d4fad", "#bf7fca", "#e0bfe6"] },
+      "bg":     { "role": "neutral", "displayName": "Warm Paper", "canonical": "#FFFBF5", "tonalRamp": ["#2b2823", "#4d473f", "#6f685c", "#918a7d", "#b3ac9e", "#d5cfc2", "#f0ebe0", "#fffbf5"] },
+      "card":   { "role": "neutral", "displayName": "Pure White", "canonical": "#FFFFFF", "tonalRamp": ["#262626", "#404040", "#595959", "#808080", "#a6a6a6", "#cccccc", "#ededed", "#ffffff"] },
+      "text":   { "role": "neutral", "displayName": "Midnight Ink", "canonical": "#1A1A2E", "tonalRamp": ["#1a1a2e", "#2c2c47", "#3f3f61", "#54547e", "#6b6b99", "#9494b8", "#bdbdd6", "#e5e5f0"] },
+      "muted":  { "role": "neutral", "displayName": "Slate Muted", "canonical": "#6B7280", "tonalRamp": ["#1f2226", "#33383f", "#474e58", "#5b6470", "#6b7280", "#939aa5", "#bcc1c9", "#e4e7ea"] }
+    },
+    "typographyMeta": {
+      "display":  { "displayName": "Display", "purpose": "The winning place name in the reel and result modal — the biggest, boldest type in the app." },
+      "headline": { "displayName": "Headline", "purpose": "App title and sheet payoff headings." },
+      "title":    { "displayName": "Title", "purpose": "Modal titles and the primary CTA label." },
+      "body":     { "displayName": "Body", "purpose": "Input text, card content, the readable default." },
+      "label":    { "displayName": "Label", "purpose": "Earned uppercase tracked caps — 'SPINNING…' and 'TODAY YOU'RE EATING AT' only." }
+    },
+    "shadows": [
+      { "name": "card-rest", "value": "0 2px 16px 0 rgba(26,26,46,0.08)", "purpose": "Ambient default lift for place cards and surfaces." },
+      { "name": "card-hover", "value": "0 6px 24px 0 rgba(26,26,46,0.14)", "purpose": "Raised state on interaction." },
+      { "name": "primary-glow", "value": "0 4px 20px 0 rgba(255,107,53,0.35)", "purpose": "Signature colored orange glow under primary actions only — a 'tap this' promise." }
+    ],
+    "motion": [
+      { "name": "press", "value": "transform scale(0.95)", "purpose": "Tactile press feedback on all buttons (scale(0.90) on small icon buttons)." },
+      { "name": "sheet-spring", "value": "spring(damping: 28, stiffness: 300)", "purpose": "Bottom-sheet / modal entrance." },
+      { "name": "result-spring", "value": "spring(damping: 22, stiffness: 280)", "purpose": "Result card scale-in." },
+      { "name": "reel-decel", "value": "quadratic ease-out, interval 60ms→380ms over 2400ms", "purpose": "Hand-authored roulette deceleration via requestAnimationFrame (not CSS keyframes)." }
+    ],
+    "breakpoints": [
+      { "name": "sm", "value": "640px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Primary Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "The one loud call-to-action — Pick Lunch, Add Place, submit.",
+      "html": "<button class=\"ds-btn-primary\">🎲 Pick Lunch!</button>",
+      "css": ".ds-btn-primary { background: #FF6B35; color: #fff; font-weight: 800; font-size: 1.25rem; padding: 20px 24px; border: none; border-radius: 24px; box-shadow: 0 4px 20px 0 rgba(255,107,53,0.35); transition: transform 0.1s ease; cursor: pointer; user-select: none; } .ds-btn-primary:active { transform: scale(0.95); } .ds-btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }"
+    },
+    {
+      "name": "Secondary Button",
+      "kind": "button",
+      "refersTo": "button-secondary",
+      "description": "Recessive companion to the primary — cancel, dismiss.",
+      "html": "<button class=\"ds-btn-secondary\">Cancel</button>",
+      "css": ".ds-btn-secondary { background: transparent; color: #6B7280; font-weight: 600; font-size: 1rem; padding: 14px 24px; border: 1px solid #E5E7EB; border-radius: 16px; transition: transform 0.1s ease; cursor: pointer; } .ds-btn-secondary:active { transform: scale(0.95); }"
+    },
+    {
+      "name": "Icon Button",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Round 36px action on cards — favorite, exclude, edit, delete.",
+      "html": "<button class=\"ds-icon-btn\" aria-label=\"Favorite\">★</button>",
+      "css": ".ds-icon-btn { width: 36px; height: 36px; border-radius: 9999px; background: #F9FAFB; color: #FFD166; font-size: 1.125rem; display: inline-flex; align-items: center; justify-content: center; border: none; transition: transform 0.1s ease; cursor: pointer; } .ds-icon-btn:active { transform: scale(0.90); }"
+    },
+    {
+      "name": "Selector Chip",
+      "kind": "chip",
+      "refersTo": "chip-selected",
+      "description": "Price / distance toggle. Selected = orange fill; tap again to clear.",
+      "html": "<div style=\"display:flex;gap:8px;\"><button class=\"ds-chip ds-chip--on\">$$</button><button class=\"ds-chip\">$$$</button></div>",
+      "css": ".ds-chip { flex: 1; padding: 10px 12px; font-size: 0.875rem; font-weight: 600; border-radius: 12px; background: #F9FAFB; color: #6B7280; border: 1px solid #E5E7EB; transition: background 0.15s, color 0.15s; cursor: pointer; } .ds-chip--on { background: #FF6B35; color: #fff; border-color: #FF6B35; }"
+    },
+    {
+      "name": "Place Card",
+      "kind": "card",
+      "refersTo": "card-place",
+      "description": "A saved spot. White on paper, soft shadow, state-colored hairline border.",
+      "html": "<div class=\"ds-card\"><div class=\"ds-card-head\"><span class=\"ds-star\">★</span><h3 class=\"ds-card-title\">The Pizza Place</h3></div><p class=\"ds-card-meta\">Italian · Picked 3 times</p></div>",
+      "css": ".ds-card { background: #fff; border-radius: 16px; padding: 16px; box-shadow: 0 2px 16px 0 rgba(26,26,46,0.08); border: 1px solid #FDE68A; display: flex; flex-direction: column; gap: 8px; } .ds-card-head { display: flex; align-items: center; gap: 6px; } .ds-star { color: #FBBF24; } .ds-card-title { margin: 0; font-size: 1rem; font-weight: 700; color: #1A1A2E; } .ds-card-meta { margin: 0; font-size: 0.75rem; color: #6B7280; }"
+    },
+    {
+      "name": "Text Input",
+      "kind": "input",
+      "refersTo": "input-field",
+      "description": "Form field with orange focus ring; 16px text to prevent iOS zoom.",
+      "html": "<input class=\"ds-input\" type=\"text\" placeholder=\"e.g. The Pizza Place\" />",
+      "css": ".ds-input { width: 100%; box-sizing: border-box; padding: 12px 16px; font-size: 1rem; color: #1A1A2E; background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 12px; outline: none; transition: box-shadow 0.15s, border-color 0.15s; } .ds-input::placeholder { color: #9CA3AF; } .ds-input:focus-visible { border-color: #FF6B35; box-shadow: 0 0 0 2px #FF6B35; }"
+    }
+  ],
+  "narrative": {
+    "northStar": "The Confetti Machine",
+    "overview": "Lunch Roulette holds one belief: the screen stays calm until it has a reason not to. A warm off-white canvas, one loud orange call-to-action, a clean list of your spots — that's the resting state, almost boring in its restraint. Then you tap, the reel spins, and the whole app erupts into a color-banded, confetti-firing payoff. All the energy is concentrated in that one burst. Design serves speed — open, spin, answer in under five seconds — and playfulness rides on top of that speed as color, emoji, and springy motion, never as decoration that slows the user down.",
+    "keyCharacteristics": [
+      "Calm canvas, loud payoff — energy is concentrated, not spread evenly.",
+      "One primary action, always the loudest thing on screen.",
+      "Bright warm accents (orange primary, yellow + green support) on an off-white base.",
+      "Chunky radii and springy, tactile motion — bouncy, never stiff.",
+      "Emoji as functional garnish, not filler."
+    ],
+    "rules": [
+      { "name": "The One Voice Rule", "body": "Orange is the only call-to-action color. Almost never more than one primary orange element per view; its scarcity makes the Pick Lunch button impossible to miss.", "section": "colors" },
+      { "name": "The Celebration-Only Gradient Rule", "body": "The orange→yellow→green gradient is reserved for the win moment. It never appears as background chrome, dividers, or button fills. Seeing the gradient means you got an answer.", "section": "colors" },
+      { "name": "The Earned Caps Rule", "body": "Uppercase tracked type appears in exactly two places, both tied to the spin ceremony. A spotlight, never a scaffold — never a tracked-uppercase kicker above an ordinary section.", "section": "typography" },
+      { "name": "The Colored-Glow-Means-Go Rule", "body": "Only primary orange actions get the orange glow. Neutral surfaces get neutral ink shadows. The glow is a promise: tap this.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do keep orange as the one voice — one primary orange action per view, backed by its Primary Glow (0 4px 20px rgba(255,107,53,0.35)).",
+      "Do keep the resting canvas calm (Warm Paper #FFFBF5, white cards, one CTA) so the spin and result read as an eruption by contrast.",
+      "Do reserve the orange→yellow→green gradient and falling emoji for the win moment only.",
+      "Do give every interactive element tactile press feedback (active:scale-95 / -90) and spring entrances — bouncy is the brand.",
+      "Do use round radii at scale: 24px primary buttons, 16px cards, 12px inputs/chips, full-round icon buttons.",
+      "Do keep muted gray (#6B7280) on white or paper only, where it holds ~4.5:1; honor prefers-reduced-motion by crossfading to the result instead of running the reel."
+    ],
+    "donts": [
+      "Don't build a corporate SaaS dashboard — no enterprise gray fields, dense tables, or settings-panel density.",
+      "Don't let the roulette drift into cheap-casino territory — no neon, no slot-machine chrome, no coin-shower kitsch.",
+      "Don't ship the generic AI-template look: no cream/sand body tint dressed up as 'warmth,' no tracked-uppercase eyebrow over ordinary sections, no identical icon-heading-text card grids, no gradient text.",
+      "Don't clutter like a food-delivery app — no promo banners, ad strips, or ratings noise.",
+      "Don't use border-left/border-right colored stripes as accents; borders here signal state (favorite/excluded) with full hairline rings only.",
+      "Don't give neutral or secondary buttons the orange glow — the colored shadow is reserved for the primary action."
+    ]
+  }
+}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { MotionConfig } from "framer-motion";
 import { useLunchPlaces } from "@/hooks/useLunchPlaces";
 import { getEligiblePlaces, pickPlace } from "@/lib/roulette";
 import PlaceList from "@/components/PlaceList";
@@ -64,13 +65,18 @@ export default function HomePage() {
 
   if (!isHydrated) {
     return (
-      <div className="flex min-h-screen items-center justify-center bg-brand-bg">
-        <span className="text-4xl animate-spin-slow">🍽️</span>
+      <div
+        className="flex min-h-screen items-center justify-center bg-brand-bg"
+        role="status"
+        aria-label="Loading your places"
+      >
+        <span className="text-4xl animate-spin-slow" aria-hidden="true">🍽️</span>
       </div>
     );
   }
 
   return (
+    <MotionConfig reducedMotion="user">
     <main className="flex min-h-screen flex-col bg-brand-bg">
       {/* Header */}
       <header className="sticky top-0 z-10 bg-brand-bg/90 backdrop-blur-sm border-b border-orange-100 px-4 py-4">
@@ -165,5 +171,6 @@ export default function HomePage() {
         <ResultModal place={pickedPlace} onClose={handleResultClose} />
       )}
     </main>
+    </MotionConfig>
   );
 }

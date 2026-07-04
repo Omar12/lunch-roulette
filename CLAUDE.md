@@ -40,3 +40,10 @@ The roulette flow:
 **Delete confirmation:** `PlaceCard` implements a two-tap pattern purely in local component state — first tap turns the button red and sets a 3-second auto-reset timeout; second tap within the window confirms deletion.
 
 **Sorting:** `PlaceList` sorts in-render (favorites first, then alphabetical). No separate sorted state is stored.
+
+## Design Context
+
+Design intent lives in two root files (used by the `impeccable` skill; read before any UI work):
+
+- **PRODUCT.md** — register (`product`), users, purpose, brand personality (playful / fast / frictionless), anti-references, design principles.
+- **DESIGN.md** — visual system. North Star **"The Confetti Machine"**: calm off-white canvas, one loud orange CTA, all energy concentrated in the spin + confetti payoff. Brand tokens, type scale, and component specs mirror `tailwind.config.ts`. Sidecar: `.impeccable/design.json`.

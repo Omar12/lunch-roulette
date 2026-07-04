@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { useModalA11y } from "@/hooks/useModalA11y";
 import type { LunchPlace, PlaceFormValues, PriceLevel, Distance } from "@/types";
 
 interface EditPlaceFormProps {
@@ -24,6 +25,7 @@ export default function EditPlaceForm({ place, onSubmit, onClose }: EditPlaceFor
     mapUrl: place.mapUrl ?? "",
   });
   const [nameError, setNameError] = useState("");
+  const sheetRef = useModalA11y<HTMLDivElement>(onClose);
 
   function field(key: keyof PlaceFormValues, value: string) {
     setValues((v) => ({ ...v, [key]: value }));
@@ -50,7 +52,11 @@ export default function EditPlaceForm({ place, onSubmit, onClose }: EditPlaceFor
         onClick={onClose}
       >
         <motion.div
+          ref={sheetRef}
           key="sheet"
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="edit-place-title"
           initial={{ y: "100%" }}
           animate={{ y: 0 }}
           exit={{ y: "100%" }}
@@ -60,7 +66,7 @@ export default function EditPlaceForm({ place, onSubmit, onClose }: EditPlaceFor
         >
           {/* Fixed header — always visible even when keyboard is open */}
           <div className="flex items-center justify-between px-6 pt-6 pb-4 shrink-0">
-            <h2 className="text-xl font-bold text-brand-text">Edit Place</h2>
+            <h2 id="edit-place-title" className="text-xl font-bold text-brand-text">Edit Place</h2>
             <button
               onClick={onClose}
               className="w-8 h-8 rounded-full bg-gray-100 flex items-center justify-center text-gray-500 text-xl active:scale-90 transition-transform"
